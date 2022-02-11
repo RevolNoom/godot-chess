@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="13.3">
+  <zoom_level>9</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>927</x>
+      <y>513</y>
+      <w>234</w>
+      <h>216</h>
+    </coordinates>
+    <panel_attributes>Board
+--
++ LoadBoard(FEN): void
++ GetState(): ?
++ GetFEN(): String
++ Play(Move): void
++ UpdateBoard(): void
+--
+# Mobilize(From, To): void
+# Capture(At): CapturedPiece
+# Spawn(At, SpawnedPiece): void
+
+--
+Responsibilities:
++ Tell the positions of pieces
++ Manipulate pieces</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>99</x>
+      <y>513</y>
+      <w>207</w>
+      <h>171</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Abstract&gt;&gt;
+Player
+--
+--
+Responsibilities:
++ Move when the Judge signals
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>351</x>
+      <y>495</y>
+      <w>270</w>
+      <h>270</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Abstract&gt;&gt;
+Judge
+--
+/+ LegalMoves(): Array of Moves/
+/+ Status(): string/
+/+ Move(Move | UCI | SAN): void/
+--
+# PromptMove(): void
+# PlayMove(Move): void
+--
+Responsibilities:
++ Defines Rules
++ Prompt players for moves
++ Decide the match result
++ Tell the players valid moves
++ Tell the players the state of the Board
++ Generates moves to act on Board
++ Act as a filter to ensure other
+  components' correct functioning</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>657</x>
+      <y>513</y>
+      <w>207</w>
+      <h>171</h>
+    </coordinates>
+    <panel_attributes>Move
+--
++ UCI(): string
+# Standard Algebraic Notation
++ SAN(): string
+--
+- _UCIName: string
+- _SANName: string
+- _actions: Array of Action</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1188</x>
+      <y>513</y>
+      <w>189</w>
+      <h>171</h>
+    </coordinates>
+    <panel_attributes>BoardSet
+--
+--
+Responsibilities:
++ Update Cell Textures</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1188</x>
+      <y>297</y>
+      <w>189</w>
+      <h>171</h>
+    </coordinates>
+    <panel_attributes>PieceSet
+--
+--
+Responsibilities:
++ Update Pieces Texture </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>702</x>
+      <y>882</y>
+      <w>117</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>Capture
+--
+- _CapturedCell
+- _CapturedPiece</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>855</x>
+      <y>882</y>
+      <w>117</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>Spawn
+--
+- _SpawnCell
+- _SpawnedPiece</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>549</x>
+      <y>882</y>
+      <w>117</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>Mobilize
+--
+- _From
+- _To</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>414</x>
+      <y>405</y>
+      <w>144</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>JudgeClassical
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>405</x>
+      <y>171</y>
+      <w>162</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>Judge960
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>405</x>
+      <y>81</y>
+      <w>162</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>JudgeKingOfTheHill
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>135</x>
+      <y>414</y>
+      <w>144</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>Human
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>135</x>
+      <y>324</y>
+      <w>144</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>Engine
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>927</x>
+      <y>297</y>
+      <w>234</w>
+      <h>189</h>
+    </coordinates>
+    <panel_attributes>{Abstract, Prototype?}
+Piece
+--
++ GetValidMoves(): Array&lt;UCI&gt;
++ IsSameSideWith(Piece): bool
++ Notation(): String
+--
+# MoveTo(AnotherCell)
+--
+- _color: bool
+- _currentPosition: Cell
+--
+Responsibilities:
++ Tells the valid moves it can make
++ Tells its type</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>405</x>
+      <y>0</y>
+      <w>162</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>JudgeSuicideBomber
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>81</x>
+      <y>243</y>
+      <w>1098</w>
+      <h>747</h>
+    </coordinates>
+    <panel_attributes>lt=.
+*CORE*</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>918</x>
+      <y>738</y>
+      <w>252</w>
+      <h>117</h>
+    </coordinates>
+    <panel_attributes>Cell
+--
++ Board(): Board
++ Name(): String
+--
+Responsibilities:
++ Being fancy
++ Tell which Board it's a component of
++ Tell its name (a1 - h8)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLInterface</id>
+    <coordinates>
+      <x>684</x>
+      <y>720</y>
+      <w>144</w>
+      <h>117</h>
+    </coordinates>
+    <panel_attributes>Interface
+Action
+{Visitor}
+--
+ActOn(Board): void
+Undo(Board): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
