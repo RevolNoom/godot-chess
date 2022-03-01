@@ -1,11 +1,13 @@
 # Base Interface for any objects that can modify a chess board
 # VISITOR PATTERN
-extends Node
+extends Reference
+
+class_name Action
 
 # OVERRIDE ME
-func ActOn(Board): 
+func ActOn(_board): 
 	pass
 
 # OVERRIDE ME	
-func Undo(Board):
+func Undo(_board):
 	pass

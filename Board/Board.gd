@@ -1,20 +1,11 @@
 extends Node2D
 
+class_name Board
 # Handle pieces movement, board setup
 # DO NOT generate moves, check valid move
 #TODO: Auto center-align chess pieces
 
 signal MovePlayed(SelfBoard)
-
-var _boardState = [[null, null, null, null, null, null, null, null],
-					[null, null, null, null, null, null, null, null],
-					[null, null, null, null, null, null, null, null],
-					[null, null, null, null, null, null, null, null],
-					[null, null, null, null, null, null, null, null],
-					[null, null, null, null, null, null, null, null],
-					[null, null, null, null, null, null, null, null],
-					[null, null, null, null, null, null, null, null]]
-
 
 # Mapping between char and piece, used for initializing pieces
 var _CharToPiece = {'k': preload("res://ChessPiece/Black/KingBlack.tscn"),
@@ -37,97 +28,85 @@ var _CharToPiece = {'k': preload("res://ChessPiece/Black/KingBlack.tscn"),
 func LoadBoard(FEN):
 	
 	# Delete pieces
-	for row in _boardState:
-		for piece in row:
-			if not piece == null:
-				piece.queue_free()
+	var it = self.Iterable()
+	while it.HasMore():
+		var piece = it.GetNext()
+		Remove(piece)
+		it.queue_free()
 			
-	var Col = "abcdefgh"
-	var colNo = 0
-	var row = 8
+	it = self.Iterator()
+	it.GoTo("a8")
 	
 	for i in FEN:
 		if str(i).is_valid_integer():	# Batches of blank cells. Ignore them
-			colNo += int(i)
+			it.Travel(int(i), 0)
 			
 		# Go down a row
-		elif i == "/":	
-			colNo = 0 
-			row -= 1
+		elif i == "/":
+			it.Travel(-8, -1)
 			
 		# We encounter a piece. Instance it and put it on the board
-		elif i in "kprqnbKPRQNB": 
-			var currentCell = Col[colNo] + str(row)
+		elif i in "kprqnbKPRQNB":
 			var newPiece = _CharToPiece[i].instance()
-			_boardState[row][colNo] = newPiece
-			#TODO: Replace with MoveTo()
-			get_node(currentCell).add_child(newPiece)
-			colNo += 1 # Advance to next cell
+			it.Add(newPiece)
+			it.Travel(1, 0)
 			
 		# We encountered something else
 		# which is cue to leave
 		else: 
 			break
 
-func GetState():
-	return _boardState
+
+func Iterator():
+	return IteratorRA.new(self)
+	
+	
+func Iterable():
+	return Iterable.new(self)
+	
+	
+# Align all pieces on the board to the center of their squares
+func RealignPieces():
+	var it = Iterable()
+	while it.HasMore():
+		RealignPiece(it.GetNext())
+		
+
+# Align a piece to the center of its square
+func RealignPiece(piece):
+	piece.set_position(0, 0)
+	
+# PROTECTED:
+
+# FOR ITERATOR
+# Add a Piece to cell @pos
+func Add(piece, pos):
+	get_node(pos).add_child(piece)
+	
+	
+# FOR ITERATOR
+# Return and remove the Piece at @pos off the board
+func Remove(pos) -> Piece:
+	var piece = get_node(pos)
+	# Detach from parent
+	if piece != null:
+		piece.get_parent().remove_child(piece)
+	return piece
+	
+
+# FOR ITERATOR
+# Move a piece from @cellFrom to @cellTo
+# TODO: Tween animation please?
+func Mobilize(cellFrom, cellTo):
+	var piece = Remove(cellFrom)
+	Add(piece, cellTo)
+	RealignPiece(piece)
+	
 	
 func GetFEN():
-#TODO:
-	return _boardState
-	
+	#var bi = Iterator()
+	pass
 
 func Play(Move):
 	Move.ActOn(self)
 	emit_signal("MovePlayed", self)
-
-
-
-# PROTECTED
-# These functions are handles for Action objects to modify this Board
-
-# @from, @to: cell name strings
-# Move a piece from cell "from" to cell "to" 
-# Assume that @from already has a Piece
-# Does not check for other piece's occupation at destination
-# TODO: Smoothly tween the movement?
-func Mobilize(from, to):
-	var indicesF = TranslateToBoardIndices(from)
-	var indicesT = TranslateToBoardIndices(to)
-	
-	var movingPiece = _boardState[indicesF[0]][indicesF[1]]
-	movingPiece.MoveTo(get_node(to))
-	_boardState[indicesF[0]][indicesF[1]] = null
-	_boardState[indicesT[0]][indicesT[1]] = movingPiece
-	
-	
-# @at: Cell name string 
-# Remove a chess Piece at @at from the board, and return it
-# Does nothing and return null if no piece exists at @at
-func Capture(at):
-	var indices = TranslateToBoardIndices(at)
-	var CapturedPiece = _boardState[indices[0]][indices[1]]
-	if CapturedPiece != null:
-		CapturedPiece.get_parent().remove_child(CapturedPiece)
-		_boardState[indices[0]][indices[1]] = null
-	return CapturedPiece
-
-# @piece: A Piece object to put on the Board
-# @atCell: cell name string
-# Does not check for other piece's presence when update the state
-# It's Judge's job
-func Spawn(piece, atCell):
-	piece.MoveTo(atCell)
-	var indices = TranslateToBoardIndices(atCell)
-	_boardState[indices[0]][indices[1]] = piece
-	
-
-# PRIVATE:
-
-# Return an array of 2 integers: [row, column]
-var _translatorDictionary = {
-	'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4, 'f': 5, 'g': 6, 'h': 7,
-	'1': 0, '2': 1, '3': 2, '4': 3, '5': 4, '6': 5, '7': 6, '8': 7
-}
-func TranslateToBoardIndices(cellName):
-	return [_translatorDictionary[cellName[0]], _translatorDictionary[cellName[1]]]

@@ -9,5 +9,5 @@ func Board():
 	return get_parent()
 	
 # Return the cell's name (a1-h8)
-func Name():
+func GetName():
 	return get_name()

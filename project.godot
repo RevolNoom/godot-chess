@@ -8,8 +8,86 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Reference",
+"class": "Action",
+"language": "GDScript",
+"path": "res://Move/Action.gd"
+}, {
+"base": "Node2D",
+"class": "Board",
+"language": "GDScript",
+"path": "res://Board/Board.gd"
+}, {
+"base": "Action",
+"class": "Capture",
+"language": "GDScript",
+"path": "res://Move/Capture.gd"
+}, {
+"base": "Iterator",
+"class": "Iterable",
+"language": "GDScript",
+"path": "res://Board/Iterator/Iterable.gd"
+}, {
+"base": "Reference",
+"class": "Iterator",
+"language": "GDScript",
+"path": "res://Board/Iterator/Iterator.gd"
+}, {
+"base": "Iterator",
+"class": "IteratorRA",
+"language": "GDScript",
+"path": "res://Board/Iterator/IteratorRA.gd"
+}, {
+"base": "Node",
+"class": "Judge",
+"language": "GDScript",
+"path": "res://Judge/Judge.gd"
+}, {
+"base": "Judge",
+"class": "JudgePythonChess",
+"language": "GDScript",
+"path": "res://Judge/JudgePythonChess/JudgePythonChess.gd"
+}, {
+"base": "Action",
+"class": "Mobilize",
+"language": "GDScript",
+"path": "res://Move/Mobilize.gd"
+}, {
+"base": "Action",
+"class": "Move",
+"language": "GDScript",
+"path": "res://Move/Move.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Piece",
+"language": "GDScript",
+"path": "res://ChessPiece/Piece.gd"
+}, {
+"base": "Node",
+"class": "Player",
+"language": "GDScript",
+"path": "res://Player/Player.gd"
+}, {
+"base": "Action",
+"class": "Spawn",
+"language": "GDScript",
+"path": "res://Move/Spawn.gd"
+} ]
 _global_script_class_icons={
+"Action": "",
+"Board": "",
+"Capture": "",
+"Iterable": "",
+"Iterator": "",
+"IteratorRA": "",
+"Judge": "",
+"JudgePythonChess": "",
+"Mobilize": "",
+"Move": "",
+"Piece": "",
+"Player": "",
+"Spawn": ""
 }
 
 [application]

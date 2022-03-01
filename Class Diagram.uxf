@@ -4,7 +4,7 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>927</x>
+      <x>846</x>
       <y>513</y>
       <w>234</w>
       <h>216</h>
@@ -12,7 +12,6 @@
     <panel_attributes>Board
 --
 + LoadBoard(FEN): void
-+ GetState(): ?
 + GetFEN(): String
 + Play(Move): void
 + UpdateBoard(): void
@@ -20,7 +19,9 @@
 # Mobilize(From, To): void
 # Capture(At): CapturedPiece
 # Spawn(At, SpawnedPiece): void
+# GetState(): ? Should I?
 
+# At(CellName): Piece
 --
 Responsibilities:
 + Tell the positions of pieces
@@ -30,7 +31,7 @@ Responsibilities:
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>99</x>
+      <x>18</x>
       <y>513</y>
       <w>207</w>
       <h>171</h>
@@ -47,13 +48,14 @@ Responsibilities:
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>351</x>
+      <x>270</x>
       <y>495</y>
       <w>270</w>
       <h>270</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Abstract&gt;&gt;
 Judge
+{Facade?}
 --
 /+ LegalMoves(): Array of Moves/
 /+ Status(): string/
@@ -63,20 +65,19 @@ Judge
 # PlayMove(Move): void
 --
 Responsibilities:
-+ Defines Rules
 + Prompt players for moves
 + Decide the match result
-+ Tell the players valid moves
 + Tell the players the state of the Board
-+ Generates moves to act on Board
++ Decide valid moves from Pieces.
 + Act as a filter to ensure other
-  components' correct functioning</panel_attributes>
+  components' correct functioning
+  (???)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>657</x>
+      <x>576</x>
       <y>513</y>
       <w>207</w>
       <h>171</h>
@@ -95,7 +96,7 @@ Responsibilities:
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1188</x>
+      <x>1107</x>
       <y>513</y>
       <w>189</w>
       <h>171</h>
@@ -110,7 +111,7 @@ Responsibilities:
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1188</x>
+      <x>1107</x>
       <y>297</y>
       <w>189</w>
       <h>171</h>
@@ -125,7 +126,7 @@ Responsibilities:
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>702</x>
+      <x>621</x>
       <y>882</y>
       <w>117</w>
       <h>90</h>
@@ -139,7 +140,7 @@ Responsibilities:
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>855</x>
+      <x>774</x>
       <y>882</y>
       <w>117</w>
       <h>90</h>
@@ -153,7 +154,7 @@ Responsibilities:
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>549</x>
+      <x>468</x>
       <y>882</y>
       <w>117</w>
       <h>90</h>
@@ -167,7 +168,7 @@ Responsibilities:
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>414</x>
+      <x>333</x>
       <y>405</y>
       <w>144</w>
       <h>63</h>
@@ -179,7 +180,7 @@ Responsibilities:
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>405</x>
+      <x>324</x>
       <y>171</y>
       <w>162</w>
       <h>63</h>
@@ -191,7 +192,7 @@ Responsibilities:
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>405</x>
+      <x>324</x>
       <y>81</y>
       <w>162</w>
       <h>63</h>
@@ -203,7 +204,7 @@ Responsibilities:
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>135</x>
+      <x>54</x>
       <y>414</y>
       <w>144</w>
       <h>63</h>
@@ -215,7 +216,7 @@ Responsibilities:
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>135</x>
+      <x>54</x>
       <y>324</y>
       <w>144</w>
       <h>63</h>
@@ -227,10 +228,10 @@ Responsibilities:
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>927</x>
-      <y>297</y>
+      <x>846</x>
+      <y>225</y>
       <w>234</w>
-      <h>189</h>
+      <h>261</h>
     </coordinates>
     <panel_attributes>{Abstract, Prototype?}
 Piece
@@ -240,19 +241,20 @@ Piece
 + Notation(): String
 --
 # MoveTo(AnotherCell)
+# GetPosition(): Cell name
 --
-- _color: bool
-- _currentPosition: Cell
+- _white: bool
 --
 Responsibilities:
 + Tells the valid moves it can make
+  (Enforce rules)
 + Tells its type</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>405</x>
+      <x>324</x>
       <y>0</y>
       <w>162</w>
       <h>63</h>
@@ -264,7 +266,7 @@ Responsibilities:
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>81</x>
+      <x>0</x>
       <y>243</y>
       <w>1098</w>
       <h>747</h>
@@ -276,7 +278,7 @@ Responsibilities:
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>918</x>
+      <x>837</x>
       <y>738</y>
       <w>252</w>
       <h>117</h>
@@ -295,7 +297,7 @@ Responsibilities:
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>684</x>
+      <x>603</x>
       <y>720</y>
       <w>144</w>
       <h>117</h>
@@ -306,6 +308,23 @@ Action
 --
 ActOn(Board): void
 Undo(Board): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1107</x>
+      <y>720</y>
+      <w>180</w>
+      <h>117</h>
+    </coordinates>
+    <panel_attributes>BoardIterator
+{Iterator}
+--
++ Reset()
++ Next()
++ Get()
++ HasNext()</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>

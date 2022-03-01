@@ -1,4 +1,5 @@
-extends "res://Move/Action.gd"
+extends Action
+class_name Move
 
 var _UCIName = ""
 var _SANName = ""
@@ -11,11 +12,11 @@ func UCI():
 func SAN():
 	return _SANName
 
-func ActOn(Board):
+func ActOn(board):
 	for action in _actions:
-		action.ActOn(Board)
+		action.ActOn(board)
 	
 func Undo(Board):
 	# Undo in reverse
 	for i in range(_actions.size()-1, -1, -1):
-		_actions[i].Undo(Board)
+		_actions[i].Undo(board)

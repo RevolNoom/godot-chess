@@ -1,14 +1,21 @@
-extends "res://Move/Action.gd"
+extends Action
+class_name Capture
 
 var _atCell = ""
 var _capturedPiece = null
+
 
 # @at: cell name strings
 func _init(at):
 	_atCell = at
 	
-func ActOn(Board):
-	_capturedPiece = Board.Capture(_atCell)
+func ActOn(board):
+	var bi = board.Iterator()
+	bi.GoTo(_atCell)
+	_capturedPiece = bi.Remove()
 	
-func Undo(Board):
-	Board.Spawn(_capturedPiece, _atCell)
+	
+func Undo(board):
+	var bi = board.Iterator()
+	bi.GoTo(_atCell)
+	bi.Add(_capturedPiece)

@@ -1,4 +1,5 @@
-extends "res://Move/Action.gd"
+extends Action
+class_name Spawn
 
 var _piece
 var _atCell
@@ -9,10 +10,12 @@ func _init(spawnPiece, atCell):
 	_piece = spawnPiece
 	_atCell = atCell
 	
-func ActOn(Board):
-	Board.Spawn(_piece, _atCell)
+func ActOn(board):
+	var bi = board.Iterator()
+	bi.GoTo(_atCell)
+	bi.Add(_piece)
 	
-func Undo(Board):
-	var returnPiece = Board.Capture(_atCell)
-	if _piece != returnPiece:
-		printerr("Spawn object gets back different piece!")
+func Undo(board):
+	var bi = board.Iterator()
+	bi.GoTo(_atCell)
+	_piece = bi.Remove()

@@ -1,4 +1,9 @@
-extends "res://Move/Action.gd"
+extends Action
+class_name Mobilize
+
+# Move a piece from _from to _to
+# Does not check for pieces-same-cell collision
+# It's assumed that _from has a piece, and _to is vacant
 
 var _from = ""
 var _to = ""
@@ -8,8 +13,16 @@ func _init(from, to):
 	_from = from
 	_to = to
 	
-func ActOn(Board):
-	Board.Mobilize(_from, _to)
+func ActOn(board):
+	var bi = board.Iterator()
+	bi.GoTo(_from)
+	var piece = bi.Remove()
+	bi.GoTo(_to)
+	bi.Add(piece)
 	
-func Undo(Board):
-	Board.Mobilize(_to, _from)
+func Undo(board):
+	var bi = board.Iterator()
+	bi.GoTo(_to)
+	var piece = bi.Remove()
+	bi.GoTo(_from)
+	bi.Add(piece)
